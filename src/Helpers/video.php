@@ -32,5 +32,3 @@ if (! function_exists('getVideoProvider')) {
         return 'vimeo';
     }
 }
-
-
