@@ -1,0 +1,52 @@
+{
+    "name": "anthoz69/anter",
+    "description": "This package is collage helper function and class for develop laravel",
+    "license": "license",
+    "authors": [
+        {
+            "name": "Anthoz69",
+            "email": "st.anthoz69@gmail.com",
+            "homepage": "https://itthipat.me"
+        }
+    ],
+    "homepage": "https://github.com/anthoz69/anter",
+    "keywords": ["Laravel", "Anter", "Anthoz69"],
+    "require": {
+        "illuminate/support": "~5|~6|~7",
+        "intervention/image": "^2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "mockery/mockery": "^1.1",
+        "orchestra/testbench": "~3|~4",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Anthoz69\\Anter\\": "src/"
+        },
+        "files": [
+            "src/Helpers/route.php",
+            "src/Helpers/video.php",
+            "src/Helpers/currency.php",
+            "src/Helpers/time.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Anthoz69\\Anter\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Anthoz69\\Anter\\AnterServiceProvider"
+            ],
+            "aliases": {
+                "Anter": "Anthoz69\\Anter\\Facades\\Anter",
+                "AnterStore": "Anthoz69\\Anter\\Facades\\AnterStore",
+                "AnterImg": "Anthoz69\\Anter\\Facades\\AnterImg"
+            }
+        }
+    }
+}
