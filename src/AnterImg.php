@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Image;
 
-
 class AnterImg
 {
     private $path;
