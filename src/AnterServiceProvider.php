@@ -27,7 +27,7 @@ class AnterServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/anter.php', 'anter');
+        $this->mergeConfigFrom(__DIR__.'/../config/anter.php', 'anter');
 
         // Register the service the package provides.
         $this->app->singleton('anter', function ($app) {
@@ -66,7 +66,7 @@ class AnterServiceProvider extends ServiceProvider
     {
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__ . '/../config/anter.php' => config_path('anter.php'),
+            __DIR__.'/../config/anter.php' => config_path('anter.php'),
         ], 'anter.config');
     }
 }

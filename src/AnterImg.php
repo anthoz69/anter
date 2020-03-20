@@ -2,10 +2,10 @@
 
 namespace Anthoz69\Anter;
 
+use Illuminate\Config\Repository as Config;
 use Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Config\Repository as Config;
 
 
 class AnterImg
@@ -17,7 +17,7 @@ class AnterImg
 
     public function __construct(Config $configs)
     {
-        $this->disk    = $configs->get('disk');
+        $this->disk = $configs->get('disk');
         $this->configs = $configs;
     }
 
@@ -66,7 +66,7 @@ class AnterImg
 
     public function save()
     {
-        $path = Storage::disk($this->disk)->put($this->path, (string)$this->file->encode());
+        $path = Storage::disk($this->disk)->put($this->path, (string) $this->file->encode());
         return $this->url($this->path);
     }
 
@@ -78,9 +78,9 @@ class AnterImg
     public function uniqueFilename($file, $storeFolder)
     {
         do {
-            $uniqueFilename = uniqid(Str::random(8)) . '.' . $file->getClientOriginalExtension();
-            $fullPathStore  = $storeFolder . DIRECTORY_SEPARATOR . $uniqueFilename;
-            $exists         = Storage::disk($this->disk)->exists($fullPathStore);
+            $uniqueFilename = uniqid(Str::random(8)).'.'.$file->getClientOriginalExtension();
+            $fullPathStore = $storeFolder.DIRECTORY_SEPARATOR.$uniqueFilename;
+            $exists = Storage::disk($this->disk)->exists($fullPathStore);
         } while ($exists);
 
         return $fullPathStore;
