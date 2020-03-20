@@ -1,7 +1,7 @@
 {
     "name": "anthoz69/anter",
     "description": "This package is collage helper function and class for develop laravel",
-    "license": "license",
+    "license": "MIT",
     "authors": [
         {
             "name": "Anthoz69",
