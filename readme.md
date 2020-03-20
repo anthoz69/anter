@@ -1,4 +1,4 @@
-# anter
+# Anter
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
@@ -25,49 +25,43 @@ The package will automatically register its service provider.
 ```php
 'providers' => [
     // other providers ommited
-    anthoz69\anter\Providers\DodPackageServiceProvider::class,
+    anthoz69\anter\Providers\AntherServiceProvider::class,
 ],
 ```
 
 ## Usage
 
-### File store function
+### AnterStore Facade
 
 Save file from frontend upload in laravel and generate unique file name before store file.
 
 ```php
-dodStore::cropImage($file, $storeFolder, $width = 500, $height = 500)
-dodStore::resizeImage($file, $storeFolder, $width = 500, $height = 500)
-dodStore::cropImageRatio($file, $storeFolder, $width = 500, $height = 500)
-dodStore::resizeImageRatio($file, $storeFolder, $width = 500, $height = 500)
-dodStore::store($file, $storeFolder)
-dodStore::delete($storePath, $replace = '/storage')
-dodStore::uniqueFilename($file, $storeFolder)
+AnterStore::store($path, $file)->save();
+AnterStore::url($path);
+AnterStore::delete($path);
 ```
+### AnterImg Facade
 
-e.g.
+Save file from frontend upload in laravel and resize image.
 ```php
-// store image in /storage/app/public/user/cover size 300x300px
-dodStore::cropImage($request->file('image'), 'user/cover', 300, 300) // crop image from center
-dodStore::resizeImage($request->file('image'), 'user/cover', 300, 300) // force resize image
-
-// Ratio is mean not resize or crop retain maximal original image size
-dodStore::cropImageRatio($request->file('image'), 'user/cover', 300, 300) // crop image from center
-dodStore::resizeImageRatio($request->file('image'), 'user/cover', 300, 300)
-
-dodStore::store($request->file('image'), 'image') // store image in /storage/app/public/image
-dodStore::delete('/storage/image/0aBJHcbT5d0e4a6fb7d4c.jpg', '/storage') // delete file
-dodStore::uniqueFilename($request->file('image'), 'image') // 0aBJHcbT5d0e4a6fb7d4c with file extention like 0aBJHcbT5d0e4a6fb7d4c.jpg
-
+// Store image in /storage/app/public/user/cover
+// save() method will return full path of image.
+$image = AnterStore::make('user/cover', $request->file('image'));
+$image->crop(300, 450)->save(); // Crop image from center size 300px x 450px.
+$image->fit(300, 300, true)->save(); // Resize and crop image to 300px x 300px and prevent up size image if set true.
+$image->resize(300, true)->save(); // Resize to width 300px and prevent up size image if set true.
+$image->width(); // Get width of image.
+$image->height(); // Get height of image.
 ```
 
-### General function
+### Currency function
 2 => 2.00
 
 4.75668 => 4.75
 
 ```php
-setCurrency($number, $percision = 2);
+setCurrency($number, $percision = 2); // truncate and round
+truncate($number, $percision = 2); // truncate and not round number
 ```
 
 ### Router function
@@ -75,13 +69,13 @@ setCurrency($number, $percision = 2);
 **isRoutePrefix** If your url start with /admin or something will place `active class` to html attribute class it good for hierarchy menu.
 
 ```php
-isRoutePrefix($on, $class = 'active', $prefix = '');
+isRouteMatch('/admin/*', $class = 'active');
 ```
 
 e.g. your url `/admin/user/create`.
 
 ```php
-<li class="{{ isRoutePrefix('/admin/user', 'active-patent-menu') }}"></li>
+<li class="{{ isRouteMatch('/admin/*', 'active-patent-menu') }}"></li>
 
 // output if url start with /admin/user
 <li class="active-patent-menu"></li>
@@ -92,8 +86,8 @@ e.g. your url `/admin/user/create`.
 ```php
 isRoute($routeName = '', $class = 'active');
 
-isRoute('user.create', 'active-color-menu') // result: active-color-menu
-isRoute('user.create') // result: active
+isRoute('user.create', 'active-color-menu'); // result: active-color-menu
+isRoute('user.create'); // result: active
 ```
 
 ### Video function
@@ -101,9 +95,9 @@ isRoute('user.create') // result: active
 get id from url support Youtube, Vimeo if wrong format will return `null`.
 
 ```php
-getYoutubeId('https://www.youtube.com/watch?v=aAzUC8vNtgo') // output: aAzUC8vNtgo
-getVimeoId('https://vimeo.com/68529790') // output: 68529790
-getVideoProvider('https://www.youtube.com/watch?v=aAzUC8vNtgo') // output: youtube
+getYoutubeId('https://www.youtube.com/watch?v=aAzUC8vNtgo'); // output: aAzUC8vNtgo
+getVimeoId('https://vimeo.com/68529790'); // output: 68529790
+getVideoProvider('https://www.youtube.com/watch?v=aAzUC8vNtgo'); // output: youtube
 ```
 
 ### Time function in Thailand country format
@@ -111,23 +105,23 @@ getVideoProvider('https://www.youtube.com/watch?v=aAzUC8vNtgo') // output: youtu
 Send timestamp (created_at, updated_at in laravel) to function will return string time.
 
 ```php
-getMonthListTH($index, $short = false)
-getDateTH($strDate, $fullMonth = false, $time = false)
-getTimeFromDate($strDate, $second = true)
+getTHMonth($index, $short = true);
+getDateTH($strDate, $shortMonth = true, $time = false);
+getTimeFromDate($strDate, $second = true);
 ```
 
 e.g.
 
 ```php
-getMonthListTH(1) // มกราคม
-getMonthListTH(1, true) // ม.ค.
+getTHMonth(1); // มกราคม
+getTHMonth(1, true); // ม.ค.
 
-getDateTH('2019-07-17 16:07:42') // 17 กรกฏาคม 2562
-getDateTH('2019-07-17 16:07:42', true) // 17 ก.ค. 2562
-getDateTH('2019-07-17 16:07:42', true, true) // 17 ก.ค. 2562 16:07
+getDateTH('2019-07-17 16:07:42'); // 17 ก.ค. 2562
+getDateTH('2019-07-17 16:07:42', false); // 17 กรกฏาคม 2562
+getDateTH('2019-07-17 16:07:42', true, true); // 17 ก.ค. 2562 16:07
 
-getTimeFromDate('2019-07-17 16:07:42') // 16:07
-getTimeFromDate('2019-07-17 16:07:42', true) // 16:07:42
+getTimeFromDate('2019-07-17 16:07:42'); // 16:07
+getTimeFromDate('2019-07-17 16:07:42', true); // 16:07:42
 ```
 
 ## Security
@@ -136,7 +130,7 @@ If you discover any security related issues, please open the issue or send me so
 
 ## Credits
 
-- [author name][link-author]
+- [Itthipat (Anthoz69)][link-author]
 - [All Contributors][link-contributors]
 
 ## Contributing
@@ -149,10 +143,10 @@ license is under MIT. Please see the [license file](license.md) for more informa
 
 [ico-version]: https://img.shields.io/packagist/v/anthoz69/anter.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/anthoz69/anter.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/170982626/shield
+[ico-styleci]: https://styleci.io/repos/248770230/shield
 
 [link-packagist]: https://packagist.org/packages/anthoz69/anter
 [link-downloads]: https://packagist.org/packages/anthoz69/anter
-[link-styleci]: https://styleci.io/repos/170982626
+[link-styleci]: https://styleci.io/repos/248770230
 [link-author]: https://github.com/anthoz69
 [link-contributors]: ../../contributors

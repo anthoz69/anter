@@ -35,9 +35,9 @@ class AnterImg
         return $this;
     }
 
-    public function fit($width, $upsize = true)
+    public function fit($width, $height = null, $upsize = true)
     {
-        $this->file = $this->file->fit($width, null, function ($constraint) use ($upsize) {
+        $this->file = $this->file->fit($width, $height, function ($constraint) use ($upsize) {
             if ($upsize) {
                 $constraint->upsize();
             }
@@ -74,12 +74,12 @@ class AnterImg
         return $this->url($this->path);
     }
 
-    public function url($path)
+    private function url($path)
     {
         return Storage::disk($this->disk)->url($path);
     }
 
-    public function uniqueFilename($file, $storeFolder)
+    private function uniqueFilename($file, $storeFolder)
     {
         do {
             $uniqueFilename = uniqid(Str::random(8)).'.'.$file->getClientOriginalExtension();
