@@ -3,9 +3,9 @@
 namespace Anthoz69\Anter;
 
 use Illuminate\Config\Repository as Config;
-use Image;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Image;
 
 
 class AnterImg
@@ -25,12 +25,14 @@ class AnterImg
     {
         $this->path = $this->uniqueFilename($file, $path);
         $this->file = Image::make($file->getRealPath());
+
         return $this;
     }
 
     public function crop($width, $height)
     {
         $this->file = $this->file->crop($width, $height);
+
         return $this;
     }
 
@@ -41,6 +43,7 @@ class AnterImg
                 $constraint->upsize();
             }
         }, $this->configs->get('fit.position'));
+
         return $this;
     }
 
@@ -51,6 +54,7 @@ class AnterImg
                 $constraint->upsize();
             }
         });
+
         return $this;
     }
 
@@ -67,6 +71,7 @@ class AnterImg
     public function save()
     {
         $path = Storage::disk($this->disk)->put($this->path, (string) $this->file->encode());
+
         return $this->url($this->path);
     }
 
