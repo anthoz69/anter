@@ -8,8 +8,6 @@ if (! function_exists('getYoutubeId')) {
         if (preg_match($regex, $url, $matches)) {
             return $matches[1];
         }
-
-        return null;
     }
 }
 
@@ -21,8 +19,6 @@ if (! function_exists('getVimeoId')) {
         if (preg_match($regex, $url, $matches)) {
             return $matches[5];
         }
-
-        return null;
     }
 }
 
