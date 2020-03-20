@@ -24,12 +24,14 @@ class AnterStore
     {
         $this->path = $path;
         $this->file = $file;
+
         return $this;
     }
 
     public function save()
     {
         $path = Storage::disk($this->disk)->putFile($this->path, $this->file);
+
         return $this->url($path);
     }
 

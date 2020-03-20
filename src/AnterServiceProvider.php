@@ -2,8 +2,8 @@
 
 namespace Anthoz69\Anter;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Support\ServiceProvider;
 
 class AnterServiceProvider extends ServiceProvider
 {

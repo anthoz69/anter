@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('getTHMonth')) {
+if (! function_exists('getTHMonth')) {
     function getTHMonth($index, $short = true)
     {
         $fullMonth = config('anter.time.full_month');
@@ -8,11 +8,12 @@ if (!function_exists('getTHMonth')) {
         if ($short) {
             return $shortMonth[$index];
         }
+
         return $fullMonth[$index];
     }
 }
 
-if (!function_exists('getDateTH')) {
+if (! function_exists('getDateTH')) {
     function getDateTH($strDate, $shortMonth = true, $time = false)
     {
         $year = date('Y', strtotime($strDate)) + 543;
@@ -31,7 +32,7 @@ if (!function_exists('getDateTH')) {
     }
 }
 
-if (!function_exists('getTimeFromDate')) {
+if (! function_exists('getTimeFromDate')) {
     function getTimeFromDate($strDate, $second = false)
     {
         $hour = date('H', strtotime($strDate));
