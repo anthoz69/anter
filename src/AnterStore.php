@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AnterStore
 {
-    private $path;
-    private $file;
     private $disk = '';
 
     public function __construct(array $configs = [])
@@ -22,17 +20,7 @@ class AnterStore
 
     public function store($path, $file)
     {
-        $this->path = $path;
-        $this->file = $file;
-
-        return $this;
-    }
-
-    public function save()
-    {
-        $path = Storage::disk($this->disk)->putFile($this->path, $this->file);
-
-        return $this->url($path);
+        return Storage::disk($this->disk)->putFile($path, $file);
     }
 
     public function url($path)
