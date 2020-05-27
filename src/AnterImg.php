@@ -22,16 +22,16 @@ class AnterImg
 
     public function make($path, $file)
     {
-        $this->path = $this->uniqueFilename($file, $path);
         $this->file = Image::make($file->getRealPath());
+        $this->path = $this->uniqueFilename($file, $path);
 
         return $this;
     }
 
     public function makeBase64($path, $base64)
     {
-        $this->path = $this->uniqueFilename($base64, $path);
         $this->file = Image::make($base64);
+        $this->path = $this->uniqueFilename($base64, $path);
 
         return $this;
     }
@@ -114,8 +114,8 @@ class AnterImg
     private function uniqueFilename($file, $storeFolder)
     {
         do {
-            $uniqueFilename = uniqid(Str::random(8)).'.'.$this->mimeType();
-            $fullPathStore = $storeFolder.DIRECTORY_SEPARATOR.$uniqueFilename;
+            $uniqueFilename = uniqid(Str::random(8)) . '.' . $this->mimeType();
+            $fullPathStore = $storeFolder . DIRECTORY_SEPARATOR . $uniqueFilename;
             $exists = Storage::disk($this->disk)->exists($fullPathStore);
         } while ($exists);
 
