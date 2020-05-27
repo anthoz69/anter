@@ -114,8 +114,8 @@ class AnterImg
     private function uniqueFilename($file, $storeFolder)
     {
         do {
-            $uniqueFilename = uniqid(Str::random(8)) . '.' . $this->mimeType();
-            $fullPathStore = $storeFolder . DIRECTORY_SEPARATOR . $uniqueFilename;
+            $uniqueFilename = uniqid(Str::random(8)).'.'.$this->mimeType();
+            $fullPathStore = $storeFolder.DIRECTORY_SEPARATOR.$uniqueFilename;
             $exists = Storage::disk($this->disk)->exists($fullPathStore);
         } while ($exists);
 
