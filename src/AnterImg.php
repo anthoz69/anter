@@ -101,12 +101,12 @@ class AnterImg
 
     public function save()
     {
-        $path = Storage::disk($this->disk)->put($this->path, (string) $this->file->encode());
+        Storage::disk($this->disk)->put($this->path, (string) $this->file->encode());
 
-        return $this->url($this->path);
+        return $this->path;
     }
 
-    private function url($path)
+    public function url($path)
     {
         return Storage::disk($this->disk)->url($path);
     }
