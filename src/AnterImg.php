@@ -77,7 +77,7 @@ class AnterImg
 
     public function mimeType()
     {
-        switch ($file->mime()) {
+        switch ($this->file->mime()) {
             case 'image/png':
                 return 'png';
                 break;
