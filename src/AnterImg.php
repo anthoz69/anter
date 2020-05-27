@@ -28,6 +28,14 @@ class AnterImg
         return $this;
     }
 
+    public function makeBase64($path, $base64)
+    {
+        $this->path = $this->uniqueFilename($base64, $path);
+        $this->file = Image::make($base64);
+
+        return $this;
+    }
+
     public function crop($width, $height)
     {
         $this->file = $this->file->crop($width, $height);
@@ -67,6 +75,30 @@ class AnterImg
         return $this->file->height();
     }
 
+    public function mimeType()
+    {
+        switch ($file->mime()) {
+            case 'image/png':
+                return 'png';
+                break;
+            case 'image/jpeg':
+                return 'jpg';
+                break;
+            case 'image/gif':
+                return 'gif';
+                break;
+            case 'image/bmp':
+                return 'bmp';
+                break;
+            case 'image/svg+xml':
+                return 'svg';
+                break;
+            default:
+                return 'jpg';
+                break;
+        }
+    }
+
     public function save()
     {
         $path = Storage::disk($this->disk)->put($this->path, (string) $this->file->encode());
@@ -82,8 +114,8 @@ class AnterImg
     private function uniqueFilename($file, $storeFolder)
     {
         do {
-            $uniqueFilename = uniqid(Str::random(8)).'.'.$file->getClientOriginalExtension();
-            $fullPathStore = $storeFolder.DIRECTORY_SEPARATOR.$uniqueFilename;
+            $uniqueFilename = uniqid(Str::random(8)) . '.' . $this->mimeType();
+            $fullPathStore = $storeFolder . DIRECTORY_SEPARATOR . $uniqueFilename;
             $exists = Storage::disk($this->disk)->exists($fullPathStore);
         } while ($exists);
 
